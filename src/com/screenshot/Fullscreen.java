@@ -1,6 +1,7 @@
 package com.screenshot;
 
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 import java.io.File;
 import java.io.IOException;
 
@@ -23,7 +24,15 @@ public class Fullscreen {
 		WebDriver driver  = new ChromeDriver();  
 		
 		//Open the url in the browser, specified by the user.
-		driver.get(url);
+		try{
+		    driver.get(url);
+		} 
+		catch(Exception e){
+		    System.out.println("Invalid URL. Please Enter a correct URL");
+		    driver.quit();			 //Close Browser
+		    System.exit(1);			//Stops the execution further script if the url is invalid
+		}
+		
 		
 		//Maximize the Browser Window
 		driver.manage().window().maximize();
@@ -37,8 +46,8 @@ public class Fullscreen {
 		ImageIO.write(screenshot.getImage(), "jpg", new File("d:\\Fullscreenshot.jpg"));
 		
 		System.out.println("Screenshot written in file successfully..!!");
-
-	}
+		driver.quit();		//Close Browser
+		}
 
 	public static void main(String[] args) throws IOException{
 		
